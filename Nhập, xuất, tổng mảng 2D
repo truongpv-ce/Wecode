@@ -1,0 +1,29 @@
+// Nhập, xuất, tổng mảng 2D
+#include <iostream>
+using namespace std;
+
+void Nhap(int**& a, int&r, int &c) {
+	cin >> r >> c;
+	a = new int*[r];
+	for (int i = 0; i < r; i++) {
+		a[i] = new int [c];
+	}
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++)
+			cin >> a[i][j];
+	}
+}
+int Tong(int**a, int r, int c) {
+	int s = 0;
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++)
+		s+=a[i][j];
+	}
+	return s;
+}
+int main() {
+	int**a, r, c;
+	Nhap(a,r,c);
+	cout << Tong(a, r, c);
+	return 0;
+}
