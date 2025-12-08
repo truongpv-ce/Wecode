@@ -1,0 +1,27 @@
+// NhapXuat1Diem
+#include <iostream>
+using namespace std;
+
+struct Point {
+	int x, y;
+};
+void Nhap(Point& p) {
+	cin >> p.x >> p.y;
+}
+Point Nhap() {
+	Point p;
+	cin >> p.x >> p.y;
+	return p;
+}
+void Xuat(Point p) {
+	cout << "( " << p.x<< " and " << p.y << " )";
+}
+int main() {
+	Point A, B;
+	Nhap(A);
+	B = Nhap();
+	Xuat(A);
+	cout << " and ";
+	Xuat(B);
+	return 0;
+}
