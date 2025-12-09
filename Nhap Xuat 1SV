@@ -1,0 +1,44 @@
+#include <iomanip>
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+
+struct SinhVien {
+    char* MASV;
+    char* HoTen;
+    char NgaySinh[12];
+    char GioiTinh;
+    float DiemToan, DiemLy, DiemHoa, DTB;
+};
+void Nhap(SinhVien& a) {
+    a.MASV = new char[100];
+    a.HoTen = new char[100];
+    cin.getline(a.MASV, 100);
+    cin.getline(a.HoTen, 100);
+    cin >> a.NgaySinh;
+    //cin.getline(sv.NgaySinh, 12);
+    cin >> a.GioiTinh;
+    cin >> a.DiemToan >> a.DiemLy >> a.DiemHoa;
+    a.DTB = (a.DiemToan + a.DiemLy + a.DiemHoa) / 3;
+}
+
+void Xuat(SinhVien a) {
+    cout << a.MASV << "\t"
+        << a.HoTen << "\t"
+        << a.NgaySinh << "\t"
+        << a.GioiTinh << "\t"
+        << a.DiemToan << "\t"
+        << a.DiemLy << "\t"
+        << a.DiemHoa << "\t"
+        << setprecision(2)
+        << a.DTB
+        << endl;
+}
+
+int main() {
+    SinhVien A;
+    Nhap(A);
+    Xuat(A);
+    return 0;
+}
