@@ -1,0 +1,72 @@
+// Nhap danh sach san pham
+// Xuat danh sach san pham
+// Tim san pham gia cao nhat
+// Tim san pham san xuat 2023
+// Sap xep danh sach san pham tang dan
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Date {
+	int d, m, y;
+};
+struct SanPham {
+	string ma;
+	string ten;
+	float gia;
+	Date nsx;
+};
+void Nhap1SP(SanPham& sp) {
+	cin >> sp.ma;
+	cin >> sp.ten;
+	cin >> sp.gia;
+	cin >> sp.nsx.d >> sp.nsx.m >> sp.nsx.y;
+}
+void Xuat1SP(SanPham sp) {
+	cout << sp.ma << " ";
+	cout << sp.ten << " ";
+	cout << sp.gia << " ";
+	cout << sp.nsx.d << "/" << sp.nsx.m << "/" << sp.nsx.y;
+}
+void NhapDS(SanPham* a, int n) {
+	for (int i = 0; i < n; i++)
+		Nhap1SP(a[i]);
+}
+void XuatDS(SanPham* a, int n) {
+	for (int i = 0; i < n; i++)
+		Xuat1SP(a[i]);
+}
+SanPham TimMax(SanPham* a, int n) {
+	int pos = 0;
+	for (int i = 1; i < n; i++) 
+		if (a[i].gia > a[pos].gia)
+			pos = i;
+		return a[pos];
+}
+void Xuat2023(SanPham* a, int n) {
+	for (int i = 0; i < n; i++) {
+		if (a[i].nsx.y == 2023)
+			Xuat1SP(a[i]);
+	}
+}
+void SapXep(SanPham* a, int n) {
+	for (int i = 0; i < n - 1; i++) {
+		for (int j = i + 1; j < n; j++)
+			if (a[i].gia > a[j].gia)
+				swap(a[i], a[j]);
+	}
+}
+int main() {
+	int n;
+	cin >> n;
+	SanPham* a = new SanPham[n];
+	NhapDS(a, n);
+	XuatDS(a, n);
+	cout << "San Pham lon nhat:";
+	Xuat1SP(TimMax(a, n));
+	cout << "san pham sx 2023";
+	Xuat2023(a, n);
+	cout << "sap xep xong ";
+	SapXep(a, n);
+	return 0;
+}
