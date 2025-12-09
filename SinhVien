@@ -1,0 +1,70 @@
+#include <iomanip>
+#include <iostream>
+#include <stdio.h>
+#include <limits>
+#include <string>
+#include <string.h>
+using namespace std;
+#define MAXN 100
+
+struct Ngay {
+    int d, m, y;
+};
+struct SinhVien {
+    char MASV[10];
+    char HoTen[MAXN];
+    Ngay NamSinh;
+    char GioiTinh;
+    float DiemToan, DiemLy, DiemHoa, DTB;
+};
+void NhapNgay(Ngay &a) {
+    cin >> a.d >> a.m >> a.y;
+}
+void Nhap1SV(SinhVien& a) {
+    cin.ignore();
+    cin.getline(a.MASV, MAXN);
+    cin.getline(a.HoTen, MAXN);
+    NhapNgay(a.NamSinh);
+    cin >> a.GioiTinh;
+    cin >> a.DiemToan >> a.DiemLy >> a.DiemHoa;
+    a.DTB = (a.DiemToan + a.DiemLy + a.DiemHoa) / 3;
+}
+void XuatNgay(Ngay a) {
+    cout << a.d << "/" << a.m << "/" << a.y;
+}
+void Xuat1SV(SinhVien a) {
+    cout << a.MASV; cout << "\t";
+    cout << a.HoTen; cout << "\t";
+    XuatNgay(a.NamSinh); cout << "\t";
+    cout << a.GioiTinh; cout << "\t";
+    cout << a.DiemToan; cout << "\t";
+    cout << a.DiemLy; cout << "\t";
+    cout << a.DiemHoa; cout << "\t";
+    cout << setprecision(3); 
+    cout << a.DTB;
+}
+void Nhap(SinhVien*& a, int& n) {
+    cin >> n;
+    a = new SinhVien[MAXN];
+    for (int i = 0; i < n; i++) {
+        cin >> ws;
+        Nhap1SV(a[i]);
+    }
+}
+void Xuat(SinhVien a[], int n) {
+    if (n == 0)
+        cout << "Empty List.";
+    for (int i = 0; i < n; i++) {
+        Xuat1SV(a[i]);
+        cout << endl;
+    }
+
+}
+int main() {
+    SinhVien* A;
+    int n;
+    Nhap(A, n);
+    Xuat(A, n);
+    return 0;
+}
+
