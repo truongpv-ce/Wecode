@@ -1,0 +1,37 @@
+// KiemTraMangTangGiamDan
+#include <iostream>
+using namespace std;
+
+void Nhap(int*& a, int& n) {
+	cin >> n;
+	a = new int[n];
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+ }
+void KiemTra(int *a, int n) {
+	if (n <= 1) {
+		cout << "mang kh tang kh giam";
+	}
+	bool tang = true;
+	bool giam = true;
+	bool bang = true;
+	for (int i = 1; i < n; i++) {
+		if (a[i] != a[i - 1])
+			bang = false;
+		if (a[i] <= a[i - 1])
+			tang = false;
+		if (a[i] >= a[i - 1])
+			giam = false;
+	}
+	if (bang) cout << "Ham bang";
+	else if (tang) cout << "Ham tang";
+	else if (giam) cout << "Ham giam";
+	else cout << "kh tang kh giam";
+}
+int main() {
+	int* a, n;
+	Nhap(a, n);
+	KiemTra(a, n);
+	return 0;
+}
