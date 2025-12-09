@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+struct Point {
+    int x, y;
+};
+void Nhap(Point*& p) {
+    p = new Point;
+    cin >> p->x >> p->y;
+}
+Point* Nhap() {
+    Point* p = new Point;
+    cin >> p->x >> p->y;
+    return p;
+}
+void Xuat_1(Point p) {
+    cout << "(" << p.x << ", " << p.y << ")";
+}
+void Xuat_2(Point* p) {
+    cout << "(" << p->x << ", " << p->y << ")";
+}
+int main() {
+    Point* A, * B;
+    Nhap(A);
+    B = Nhap();
+    Xuat_1(*A);
+    std::cout << " and ";
+    Xuat_2(B);
+    return 0;
+}
