@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+#define MAXN 100
+
+typedef struct POINT {
+    int x, y;
+} Point;
+void Nhap(Point& num) {
+    cin >> num.x >> num.y;
+}
+Point Nhap() {
+    Point num;
+    cin >> num.x >> num.y;
+    return num;
+}
+void Xuat(Point num) {
+    cout << "(" << num.x << ", " << num.y << ")" << endl;
+}
+void Nhap(Point* a, int& n) {
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        Nhap(a[i]);
+}
+void Xuat(const Point* a, const int& n) {
+    for (int i = 0; i < n; i++)
+        Xuat(a[i]);
+}
+int main() {
+    Point points[MAXN];
+    int n;
+    Nhap(points, n);
+    Xuat(points, n);
+    return 0;
+}
