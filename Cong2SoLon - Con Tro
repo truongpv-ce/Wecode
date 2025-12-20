@@ -1,0 +1,76 @@
+/*###Begin banned keyword - each of the following line if appear in code will raise error. regex supported
+###End banned keyword*/
+
+#include <iostream>
+#include <cstring>
+#define MAX 200
+
+struct SOLON {
+    int *so;
+    int n;
+};
+using namespace std;
+
+// Hàm nhập số lớn thông qua tham chiếu
+void input(SOLON &a) {
+    char s[MAX + 10]; // Bộ đệm để chứa chuỗi nhập vào
+    cin >> s;
+    a.n = strlen(s);
+    a.so = new int[a.n]; // Cấp phát bộ nhớ cho các chữ số
+    // Lưu các chữ số theo thứ tự ngược (hàng đơn vị nằm ở chỉ số 0)
+    // Để thuận tiện cho việc cộng trừ
+    for (int i = 0; i < a.n; i++) {
+        a.so[i] = s[a.n - 1 - i] - '0';
+    }
+}
+
+// Hàm nhập quá tải (overloaded) trả về con trỏ
+SOLON* input() {
+    SOLON *a = new SOLON;
+    input(*a); // Tái sử dụng hàm nhập tham chiếu ở trên
+    return a;
+}
+
+// Hàm cộng hai số lớn
+SOLON Cong(SOLON a, SOLON b) {
+    SOLON res;
+    int max_len = (a.n > b.n) ? a.n : b.n;
+    res.so = new int[max_len + 1]; // Độ dài tối đa có thể (bao gồm biến nhớ)
+    res.n = 0;
+    
+    int carry = 0; // Biến nhớ
+    for (int i = 0; i < max_len; i++) {
+        int val_a = (i < a.n) ? a.so[i] : 0;
+        int val_b = (i < b.n) ? b.so[i] : 0;
+        int sum = val_a + val_b + carry;
+        
+        res.so[res.n++] = sum % 10; // Lấy hàng đơn vị
+        carry = sum / 10;           // Lấy hàng chục làm biến nhớ
+    }
+    
+    // Nếu vẫn còn nhớ sau khi cộng hết các hàng
+    if (carry > 0) {
+        res.so[res.n++] = carry;
+    }
+    
+    return res;
+}
+
+// Hàm xuất số lớn
+void output(SOLON *a) {
+    // In từ chỉ số cuối về 0 vì lúc đầu ta đã lưu ngược
+    for (int i = a->n - 1; i >= 0; i--) {
+        cout << a->so[i];
+    }
+    cout << endl;
+}
+int main() {
+    SOLON a, *b, S;
+    input(a);
+    b=input();
+    S=Cong(a, *b);
+    output(&a);
+    output(b);
+    output(&S);
+    return 0;
+}
