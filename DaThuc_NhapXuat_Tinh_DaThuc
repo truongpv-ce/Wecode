@@ -1,0 +1,96 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+// Định nghĩa cấu trúc cho một Đơn thức
+struct DONTHUC {
+    double heso; // Hệ số
+    int somu;    // Số mũ
+};
+
+// Định nghĩa cấu trúc cho Đa thức
+struct DATHUC {
+    int n; // Số lượng hạng tử
+    DONTHUC arr[105]; // Mảng chứa các đơn thức (tối đa 100 theo đề bài)
+};
+
+// Hàm nhập đa thức
+DATHUC Nhap() {
+    DATHUC d;
+    d.n = 0;
+    int soLuongInput;
+    cin >> soLuongInput; // Đọc số lượng cặp input
+    
+    for(int i = 0; i < soLuongInput; i++) {
+        double h; 
+        int s;
+        cin >> h >> s;
+        
+        // Chỉ lưu các hạng tử có hệ số khác 0
+        if (h != 0) {
+            d.arr[d.n].heso = h;
+            d.arr[d.n].somu = s;
+            d.n++;
+        }
+    }
+    return d;
+}
+
+// Hàm xuất đa thức theo định dạng yêu cầu
+void Xuat(DATHUC d) {
+    // Nếu đa thức rỗng (tất cả hệ số đều bằng 0)
+    if (d.n == 0) {
+        cout << "0";
+        return;
+    }
+
+    for (int i = 0; i < d.n; i++) {
+        double h = d.arr[i].heso;
+        int s = d.arr[i].somu;
+
+        // 1. Xử lý Dấu (+ hoặc -)
+        if (h > 0) {
+            // Chỉ in dấu '+' nếu đây KHÔNG phải là hạng tử đầu tiên
+            if (i > 0) cout << "+";
+        } else {
+            // Luôn in dấu '-' cho số âm
+            cout << "-";
+        }
+
+        // 2. Xử lý Hệ số
+        // In giá trị tuyệt đối của hệ số nếu:
+        // - Hệ số khác 1 và -1 (ví dụ: 5, 2.5)
+        // - HOẶC nếu số mũ là 0 (hạng tử tự do, ví dụ 1 hoặc -1 ở cuối)
+        if (abs(h) != 1 || s == 0) {
+            cout << abs(h);
+        }
+
+        // 3. Xử lý phần Biến (x và số mũ)
+        if (s > 0) {
+            cout << "x";
+            // Chỉ in số mũ nếu lớn hơn 1
+            if (s > 1) {
+                cout << "^" << s;
+            }
+        }
+    }
+}
+
+// Hàm tính giá trị đa thức tại x
+double TinhDaThuc(DATHUC d, double x) {
+    double sum = 0;
+    for (int i = 0; i < d.n; i++) {
+        // tổng += hệ số * x^số mũ
+        sum += d.arr[i].heso * pow(x, d.arr[i].somu);
+    }
+    return sum;
+}
+int main() {
+    DATHUC B; B = Nhap();
+    cout << "Da thuc vua nhap la: "; Xuat(B);
+    double x; cin >> x;
+    cout << "\nVoi x=" << x << ", gia tri da thuc la: "
+         << setprecision(2) << fixed << TinhDaThuc(B, x);
+    return 0;
+}
