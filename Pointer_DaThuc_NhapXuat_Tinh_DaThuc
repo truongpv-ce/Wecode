@@ -1,0 +1,88 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+struct DONTHUC {
+    double heso;
+    int somu;
+};
+
+struct DATHUC {
+    int n;
+    DONTHUC arr[105]; // Dùng mảng lớn hơn 100 một chút cho an toàn
+};
+
+DATHUC* Nhap() {
+    DATHUC* d = new DATHUC; // Cấp phát bộ nhớ động
+    int k;
+    cin >> k; // Đọc số lượng cặp input
+    d->n = 0; // Khởi tạo biến đếm số hạng tử hợp lệ
+    
+    for (int i = 0; i < k; i++) {
+        double h;
+        int s;
+        cin >> h >> s;
+        
+        // Loại bỏ ngay các hệ số bằng 0
+        if (h != 0) {
+            d->arr[d->n].heso = h;
+            d->arr[d->n].somu = s;
+            d->n++;
+        }
+    }
+    return d;
+}
+
+void Xuat(DATHUC* d) {
+    // Xử lý trường hợp đa thức là 0 (rỗng)
+    if (d->n == 0) {
+        cout << "0";
+        return;
+    }
+
+    for (int i = 0; i < d->n; i++) {
+        double h = d->arr[i].heso;
+        int s = d->arr[i].somu;
+
+        // 1. Xử lý Dấu
+        if (h > 0) {
+            // Chỉ in '+' nếu không phải hạng tử đầu
+            if (i > 0) cout << "+";
+        } else {
+            cout << "-";
+        }
+
+        // 2. Xử lý Hệ số
+        // In trị tuyệt đối nếu:
+        // - Khác 1 (ví dụ: 2, 0.5)
+        // - Hoặc là số hạng tự do (mũ 0 -> bắt buộc in số 1)
+        if (abs(h) != 1 || s == 0) {
+            cout << abs(h);
+        }
+
+        // 3. Xử lý Biến và Số mũ
+        if (s > 0) {
+            cout << "x";
+            if (s > 1) {
+                cout << "^" << s;
+            }
+        }
+    }
+}
+
+double TinhDaThuc(DATHUC* d, double x) {
+    double sum = 0;
+    for (int i = 0; i < d->n; i++) {
+        sum += d->arr[i].heso * pow(x, d->arr[i].somu);
+    }
+    return sum;
+}
+int main() {
+    DATHUC *B; B = Nhap();
+    cout << "Da thuc vua nhap la: "; Xuat(B);
+    double x; cin >> x;
+    cout << "\nVoi x=" << x << ", gia tri da thuc la: "
+         << setprecision(2) << fixed << TinhDaThuc(B, x);
+    return 0;
+}
