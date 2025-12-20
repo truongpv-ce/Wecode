@@ -1,0 +1,74 @@
+/*###Begin banned keyword - each of the following line if appear in code will raise error. regex supported
+###End banned keyword*/
+
+#include <iostream>
+#include <cmath>
+#define MAXN 105
+
+using namespace std;
+
+// Định nghĩa cấu trúc Phân số
+struct PhanSo {
+    int tu;  // Tử số
+    int mau; // Mẫu số
+};
+
+// Hàm tìm Ước chung lớn nhất (USCLN)
+int timUSCLN(int a, int b) {
+    // Dùng giá trị tuyệt đối để tính toán
+    a = abs(a);
+    b = abs(b);
+    while (b > 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+// Hàm nhập mảng phân số
+void Nhap(PhanSo a[], int &n) {
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i].tu >> a[i].mau;
+    }
+}
+
+// Hàm xử lý và xuất mảng phân số
+void Xuat(PhanSo a[], int n) {
+    for (int i = 0; i < n; i++) {
+        // Kiểm tra mẫu số bằng 0
+        if (a[i].mau == 0) {
+            cout << "Khong thoa yeu cau bai toan" << endl;
+        } else {
+            // Chuẩn hóa dấu: Mẫu số luôn phải dương
+            if (a[i].mau < 0) {
+                a[i].tu = -a[i].tu;
+                a[i].mau = -a[i].mau;
+            }
+
+            // Rút gọn phân số
+            int uscln = timUSCLN(a[i].tu, a[i].mau);
+            a[i].tu /= uscln;
+            a[i].mau /= uscln;
+
+            // Định dạng xuất
+            if (a[i].mau == 1) {
+                // Nếu mẫu là 1, chỉ in tử số (số nguyên)
+                cout << a[i].tu << endl;
+            } else {
+                // Ngược lại in dạng a/b
+                cout << a[i].tu << "/" << a[i].mau << endl;
+            }
+        }
+    }
+}
+
+int main() {
+    PhanSo a[MAXN];
+    int n;
+    Nhap(a, n);
+    Xuat(a, n);
+    return 0;
+}
+
