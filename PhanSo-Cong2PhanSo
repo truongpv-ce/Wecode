@@ -1,0 +1,80 @@
+/*###Begin banned keyword - each of the following line if appear in code will raise error. regex supported
+###End banned keyword*/
+
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+
+using namespace std;
+
+// Định nghĩa cấu trúc Phân số
+struct PhanSo {
+    int tu;  // Tử số
+    int mau; // Mẫu số
+};
+
+// Hàm hỗ trợ tìm Ước chung lớn nhất
+int timUSCLN(int a, int b) {
+    a = abs(a);
+    b = abs(b);
+    while (b > 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+// Hàm rút gọn phân số
+PhanSo RutGon(PhanSo p) {
+    // Đảm bảo mẫu số dương
+    if (p.mau < 0) {
+        p.tu = -p.tu;
+        p.mau = -p.mau;
+    }
+    // Rút gọn bằng USCLN
+    int u = timUSCLN(p.tu, p.mau);
+    p.tu /= u;
+    p.mau /= u;
+    return p;
+}
+
+// Nạp chồng hàm 1: Nhập phân số (tham chiếu)
+void Nhap(PhanSo &p) {
+    cin >> p.tu >> p.mau;
+}
+
+// Nạp chồng hàm 2: Nhập phân số và trả về kết quả
+PhanSo Nhap() {
+    PhanSo p;
+    cin >> p.tu >> p.mau;
+    return p;
+}
+
+// Hàm cộng hai phân số
+PhanSo Cong(PhanSo a, PhanSo b) {
+    PhanSo tong;
+    // Công thức: a/b + c/d = (ad + bc) / bd
+    tong.tu = a.tu * b.mau + b.tu * a.mau;
+    tong.mau = a.mau * b.mau;
+    return RutGon(tong); // Trả về kết quả đã rút gọn
+}
+
+// Hàm xuất phân số
+void Xuat(PhanSo p) {
+    if (p.mau == 1) {
+        // Nếu mẫu là 1, chỉ in tử số (vd: -1, 0, 5)
+        cout << p.tu;
+    } else {
+        // In định dạng phân số a/b
+        cout << p.tu << "/" << p.mau;
+    }
+}
+
+int main() {
+    PhanSo a, b;
+    Nhap(a);
+    b = Nhap();
+    Xuat(Cong(a, b));
+    return 0;
+}
