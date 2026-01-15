@@ -1,0 +1,36 @@
+/*###Begin banned keyword - each of the following line if appear in code will raise error. regex supported
+###End banned keyword*/
+#include <iostream>
+using namespace std;
+#define MAXN 100
+    
+void NhapMang(int a[], int& n) {
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+            cin >> a[i];
+    }
+}
+int DemMangConBang(int a[], int& n) {
+    int count = 1;
+    int ketqua = 0;
+    for (int i = 1; i < n + 1; i++) {
+        if (a[i] == a[i - 1]) {
+            count++;
+        }
+        else {
+            if (count >= 2) {
+                ketqua++;
+            }
+            count = 1;
+        }
+    }
+    return ketqua;
+}
+
+
+int main() {
+    int a[MAXN], n;
+    NhapMang(a, n);
+    std::cout << DemMangConBang(a, n);
+    return 0;
+}
