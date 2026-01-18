@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MAXN 100
+struct Ngay{
+    int day, month, year;
+};
+struct Sinhvien{
+    char MaSV[MAXN];
+    char Hoten[MAXN];
+    Ngay Namsinh;
+    char Gioitinh;
+    float DiemToan, DiemHoa, DiemLi, DiemTB;
+};
+void Nhapngay(Ngay &a){
+    cin >> a.day >> a.month >> a.year;
+}
+void Nhap(Sinhvien &a){
+    cout << "Nhap MaSV: ";
+    cin.getline(a.MaSV, MAXN);
+    cout << "Nhap Hoten: ";
+    cin.getline(a.Hoten, MAXN);
+    cout << "Nhap Ngay thang nam sinh: ";
+    Nhapngay(a.Namsinh);
+    cout << "Nhap Gioi tinh: ";
+    cin >> a.Gioitinh;
+    cout << "Nhap DiemToan: ";
+    cin >> a.DiemToan;
+    cout << "Nhap DiemHoa: ";
+    cin >> a.DiemHoa;
+    cout << "Nhap DiemLi: ";
+    cin >> a.DiemLi;
+    cin.ignore();
+    a.DiemTB = (a.DiemToan + a.DiemHoa + a.DiemLi)/3;
+}
+void Nhap(Sinhvien *&a, int &n){
+    cout << "Nhap so luong SV: ";
+    cin >> n;
+    cin.ignore();
+    a = new Sinhvien[n];
+    for (int i=0; i<n; i++){
+        cout << "Nhap sinh vien thu "<< i+1 << endl;
+        Nhap(a[i]);
+    }
+
+}
+void Xuatngay(Ngay a){
+    cout << a.day << "/" << a.month << "/" << a.year << "/";
+}
+void Xuat(Sinhvien &a){
+    cout << a.MaSV << "\t";
+    cout << a.Hoten << "\t";
+    Xuatngay(a.Namsinh); cout << "\t";
+    cout << a.Gioitinh << "\t";
+    cout << a.DiemToan << "\t";
+    cout << a.DiemHoa << "\t";
+    cout << a.DiemLi << "\t";
+    cout << a.DiemTB << endl;
+}
+void Xuat(Sinhvien *a, int n){
+    for (int i=0; i<n; i++){
+        cout << "Ket qua cua sinh vien" << i+1 << endl;
+        Xuat(a[i]);
+    }
+}
+int main() {
+    Sinhvien* a;
+    int n;
+    Nhap(a, n);
+    Xuat(a, n);
+    return 0;
+}
