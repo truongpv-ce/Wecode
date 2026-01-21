@@ -1,0 +1,58 @@
+/*###Begin banned keyword - each of the following line if appear in code will raise error. regex supported
+###End banned keyword*/
+
+#include <iostream>
+#define MAXN 100
+
+struct SONGUYEN {
+    int a; // số nguyên cần đếm số lần xuất hiện trong mảng A
+    int count; // Số lần xuất hiện của số nguyên a trong A
+};
+void Nhap(SONGUYEN *&b, int &nb){
+    int n;
+    std::cin >> n;
+
+    int A[MAXN];
+    for (int i=0; i<n; i++){
+        std::cin >> A[i];
+    }
+
+    b = new SONGUYEN[n];
+    nb=0;
+
+    for (int i=0; i<n; i++){
+        int x = A[i];
+
+        bool datontai=false;
+        for (int j=0; j<nb;j++){
+            if (b[j].a==x){
+                b[j].count++;
+                datontai=true;
+                break;
+            }
+        }
+        if (datontai==false){
+            b[nb].a = x;
+            b[nb].count = 1;
+            nb++;
+        }
+    }
+}
+void Xuat(const SONGUYEN *b, int nb){
+    for (int i=0; i<nb; i++){
+        std::cout << b[i].a << " xuat hien " << b[i].count << " lan" << std::endl;
+    }
+}
+//###INSERT CODE HERE -
+
+
+int main() {
+    SONGUYEN *b;
+    int nb;
+
+    Nhap(b, nb);
+
+    Xuat(b, nb);
+
+    return 0;
+}
